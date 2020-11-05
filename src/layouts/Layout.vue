@@ -3,7 +3,7 @@
     <q-header elevated>
       <q-toolbar>
         <q-toolbar-title class="absolute-center">
-          ToDo list
+          ToDo
         </q-toolbar-title>
       </q-toolbar>
     </q-header>
@@ -33,7 +33,7 @@
           header
           class="text-grey-1"
         >
-          Menu
+          Меню
         </q-item-label>
         <EssentialLink
           v-for="link in links"
@@ -54,12 +54,12 @@ import EssentialLink from 'components/EssentialLink.vue'
 
 const links = [
   {
-    title: 'ToDo',
+    title: 'Список',
     icon: 'list',
     link: '/'
   },
   {
-    title: 'Settings',
+    title: 'Настройки',
     icon: 'settings',
     link: '/settings'
   },
