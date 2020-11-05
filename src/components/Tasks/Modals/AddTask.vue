@@ -7,18 +7,72 @@
     </q-card-section>
 
     <q-card-section class="q-pt-none">
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum repellendus sit voluptate voluptas eveniet porro. Rerum blanditiis perferendis totam, ea at omnis vel numquam exercitationem aut, natus minima, porro labore.
+       <q-input
+        outlined
+        v-model="task.name"
+        label="Что сделать?"
+        class="q-pb-sm"
+      />
+
+       <q-input
+        outlined
+        v-model="task.dueDate"
+        label="Когда?"
+        class="q-pb-sm"
+      >
+        <template v-slot:append>
+          <q-icon name="event" class="cursor-pointer">
+            <q-popup-proxy ref="qDateProxy" transition-show="scale" transition-hide="scale">
+              <q-date v-model="task.dueDate" first-day-of-week="1">
+                <div class="row items-center justify-end">
+                  <q-btn v-close-popup label="Готово" color="primary" flat />
+                </div>
+              </q-date>
+            </q-popup-proxy>
+          </q-icon>
+        </template>
+      </q-input>
+
+      <q-input
+        outlined
+        v-model="task.dueTime"
+        label="Во сколько?"
+        class="q-pb-sm"
+      >
+        <template v-slot:append>
+          <q-icon name="access_time" class="cursor-pointer">
+            <q-popup-proxy transition-show="scale" transition-hide="scale">
+              <q-time
+                v-model="task.dueTime"
+                format24h
+              >
+                <div class="row items-center justify-end">
+                  <q-btn v-close-popup label="Готово" color="primary" flat />
+                </div>
+              </q-time>
+            </q-popup-proxy>
+          </q-icon>
+        </template>
+      </q-input>
     </q-card-section>
 
     <q-card-actions align="right">
-      <q-btn flat label="OK" color="primary" v-close-popup />
+      <q-btn flat label="Сохранить" color="primary" v-close-popup />
     </q-card-actions>
   </q-card>
 </template>
 
 <script>
 export default {
-
+  data() {
+    return {
+      task: {
+        name: '',
+        dueDate: '',
+        dueTime: ''
+      }
+    }
+  }
 }
 </script>
 
