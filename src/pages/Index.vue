@@ -3,6 +3,7 @@
     <q-list
       bordered
       separator
+      v-if="Object.keys(tasks).length !== 0"
     >
       <task
         v-for="(task, key) in tasks"
@@ -21,7 +22,7 @@
       />
     </div>
     <q-dialog v-model="showAddModal">
-      <add-task />
+      <add-task @close="showAddModal = false" />
     </q-dialog>
   </q-page>
 </template>

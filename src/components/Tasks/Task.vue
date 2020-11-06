@@ -17,7 +17,7 @@
           </q-item-label>
         </q-item-section>
 
-        <q-item-section side center>
+        <q-item-section side center v-if="task.dueTime">
           <q-item-label caption>
             <q-icon
               name="event"
