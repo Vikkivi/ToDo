@@ -38,35 +38,60 @@
         </div>
 
         <q-item-section side>
-           <q-btn
-                flat
-                round
-                dense
-                color="red-14"
-                icon="delete"
-                @click.stop="promptToDelete(id)"
+          <div class="row">
+            <q-btn
+              flat
+              round
+              dense
+              color="primary"
+              icon="edit"
+              @click.stop="showEditModal = true"
             />
+            <q-btn
+              flat
+              round
+              dense
+              color="red-14"
+              icon="delete"
+              @click.stop="promptToDelete(id)"
+            />
+          </div>
         </q-item-section>
+        <q-dialog v-model="showEditModal">
+          <edit-task :taskToChange="task" :id="id" @close="showEditModal= false" />
+        </q-dialog>
       </q-item>
 </template>
 
 <script>
     import { mapActions } from 'vuex';
     export default {
-        props: ['task', 'id'],
-        methods: {
-            ...mapActions('tasks', ['updateTask', 'deleteTask']),
-            promptToDelete(id) {
-                this.$q.dialog({
-                    title: 'Подтвердить',
-                    message: 'Вы действительно хотите удалить?',
-                    cancel: true,
-                    persistent: true
-                }).onOk(() => {
-                    this.deleteTask(id);
-                })
-            }
+      props: ['task', 'id'],
+
+      data() {
+        return {
+          showEditModal: false
         }
+      },
+
+      methods: {
+        ...mapActions('tasks', ['updateTask', 'deleteTask']),
+
+        promptToDelete(id) {
+          this.$q.dialog({
+            title: 'Подтвердить',
+            message: 'Вы действительно хотите удалить?',
+            cancel: true,
+            persistent: true
+          }).onOk(() => {
+            this.deleteTask(id);
+          })
+        }
+      },
+
+      components: {
+        'edit-task': require('components/Tasks/Modals/EditTask.vue').default,
+      }
     }
 </script>
 

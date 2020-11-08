@@ -3,7 +3,7 @@
       <q-form
         @submit.prevent="submitForm"
       >
-      <modal-head>Добавить задачу</modal-head>
+      <modal-head>Изменить задачу</modal-head>
 
       <q-card-section class="q-pt-none">
         <modal-task-name ref="modalTaskName" :name.sync="task.name" />
@@ -20,6 +20,8 @@
 import { mapActions } from 'vuex';
 
 export default {
+  props: ['taskToChange', 'id'],
+
   data() {
     return {
       task: {
@@ -40,7 +42,7 @@ export default {
   },
 
   methods: {
-    ...mapActions('tasks', ['addTask']),
+    ...mapActions('tasks', ['updateTask']),
     submitForm() {
       const nameInput = this.$refs.modalTaskName.$refs.name;
       nameInput.validate();
@@ -50,9 +52,16 @@ export default {
     },
 
     submitTask() {
-      this.addTask(this.task);
+      this.updateTask({
+        id: this.id,
+        updates: this.task
+      });
       this.$emit('close');
     }
+  },
+
+  mounted() {
+    this.task = Object.assign({}, this.taskToChange);
   }
 }
 </script>
