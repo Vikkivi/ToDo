@@ -1,17 +1,13 @@
 <template>
   <q-page class="q-pa-md">
-    <q-list
-      bordered
-      separator
-      v-if="Object.keys(tasks).length !== 0"
-    >
-      <task
-        v-for="(task, key) in tasks"
-        :key="key"
-        :task="task"
-        :id="key"
-      ></task>
-    </q-list>
+    <div class="row q-mb-lg">
+      <search />
+    </div>
+
+    <p v-if="!Object.keys(tasksToDo).length && !Object.keys(tasksDone).length">Задачи не найдены</p>
+    <tasks-todo :tasksToDo="tasksToDo" />
+    <hr>
+    <tasks-done :tasksDone="tasksDone" />
     <div class="fixed-bottom text-center q-mb-lg">
       <q-btn
         round
@@ -37,11 +33,13 @@
       }
     },
     computed: {
-      ...mapGetters('tasks', ['tasks'])
+      ...mapGetters('tasks', ['tasksToDo', 'tasksDone'])
     },
     components: {
-      'task': require('components/Tasks/Task.vue').default,
       'add-task': require('components/Tasks/Modals/AddTask.vue').default,
+      'tasks-todo': require('components/Tasks/TasksToDo.vue').default,
+      'tasks-done': require('components/Tasks/TasksDone.vue').default,
+      'search': require('components/Tasks/Tools/Search.vue').default,
     }
   }
 </script>
