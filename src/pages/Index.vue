@@ -2,6 +2,7 @@
   <q-page class="q-pa-md">
     <div class="row q-mb-lg">
       <search />
+      <sort />
     </div>
 
     <p v-if="!Object.keys(tasksToDo).length && !Object.keys(tasksDone).length">Задачи не найдены</p>
@@ -40,6 +41,7 @@
       'tasks-todo': require('components/Tasks/TasksToDo.vue').default,
       'tasks-done': require('components/Tasks/TasksDone.vue').default,
       'search': require('components/Tasks/Tools/Search.vue').default,
+      'sort': require('components/Tasks/Tools/Sort.vue').default,
     }
   }
 </script>

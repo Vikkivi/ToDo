@@ -6,24 +6,25 @@ const state = {
         'ID1': {
           name: 'Сходить в магазин',
           done: false,
-          dueDate: '20.09.2020',
+          dueDate: '2020/11/18',
           dueTime: '18:00'
         },
         'ID2': {
           name: 'Купить хлеб',
           done: false,
-          dueDate: '16.09.2021',
+          dueDate: '2021/11/12',
           dueTime: '14:00'
         },
         'ID3': {
           name: 'Купить сахар',
           done: false,
-          dueDate: '19.07.2022',
+          dueDate: '2020/11/17',
           dueTime: '18:45'
         },
     },
 
-    search: ''
+    search: '',
+    sort: 'dueDate'
 }
 
 const mutations = {
@@ -41,6 +42,10 @@ const mutations = {
 
     setSearch(state, value) {
         state.search = value;
+    },
+
+    setSort(state, value) {
+        state.sort = value;
     }
 }
 
@@ -65,24 +70,44 @@ const actions = {
     setSearch({ commit }, value) {
         commit('setSearch', value);
     },
+
+    setSort({ commit }, value) {
+        commit('setSort', value);
+    },
 }
 
 const getters = {
-    filteredTasks: (state) => {
+    sortedTasks: (state) => {
+        const tasksSorted = {};
+        const sortedKeys = Object.keys(state.tasks).sort((a,b) => {
+            const aName = state.tasks[a][state.sort].toLowerCase();
+            const bName = state.tasks[b][state.sort].toLowerCase();
+            if (aName > bName) return 1
+            else if (aName < bName) return -1
+            else return 0
+        })
+        sortedKeys.forEach(key => {
+            tasksSorted[key] = state.tasks[key];
+        })
+        return tasksSorted;
+    },
+
+    filteredTasks: (state, getters) => {
+        const sortedTasks = getters.sortedTasks;
         if (state.search) {
             const tasks = {};
             const search = state.search.toLowerCase();
-            Object.keys(state.tasks).forEach(key => {
-                const taskName = state.tasks[key].name.toLowerCase();
+            Object.keys(sortedTasks).forEach(key => {
+                const taskName = sortedTasks[key].name.toLowerCase();
                 if (taskName.includes(search)) {
-                    tasks[key] = state.tasks[key];
+                    tasks[key] = sortedTasks[key];
                 }
             })
 
             return tasks;
         }
 
-        return state.tasks;
+        return sortedTasks;
     },
 
     tasksToDo: (state, getters) => {

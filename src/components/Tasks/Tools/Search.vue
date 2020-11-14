@@ -4,7 +4,6 @@
       outlined
       v-model="searchField"
       label="Поиск"
-      dense
     >
       <template v-slot:append>
         <q-icon
