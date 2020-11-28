@@ -28,7 +28,7 @@
         </q-item-section>
         <div class="column items-end justify-center">
           <q-item-section side center>
-          <q-item-label caption>{{ task.dueDate }}</q-item-label>
+          <q-item-label caption>{{ task.dueDate | niceDate }}</q-item-label>
           </q-item-section>
           <q-item-section side center>
             <q-item-label caption>
@@ -65,6 +65,7 @@
 
 <script>
     import { mapActions } from 'vuex';
+    import { date } from 'quasar'
     export default {
       props: ['task', 'id'],
 
@@ -86,6 +87,12 @@
           }).onOk(() => {
             this.deleteTask(id);
           })
+        }
+      },
+
+      filters: {
+        niceDate(value) {
+          return date.formatDate(value, 'D MMM YYYY');
         }
       },
 

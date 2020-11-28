@@ -4,6 +4,7 @@
       outlined
       v-model="searchField"
       label="Поиск"
+      @keyup.esc="searchField = ''"
     >
       <template v-slot:append>
         <q-icon
